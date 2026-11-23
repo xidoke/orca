@@ -9,7 +9,10 @@ import type { BrowserPageEditCommand } from '../assemble-chrome/context-menu/bro
 import { RemoteBrowserInputQueue } from './remote-browser-input-queue'
 import { useRemoteBrowserPageHover } from './use-remote-browser-page-hover'
 import { useRemoteBrowserSelectPopup } from './remote-browser-select-popup'
-import type { RemoteBrowserPageInputParams } from './remote-browser-page-input-params'
+import type {
+  RemoteBrowserKeyboardProxyHandlers,
+  RemoteBrowserPageInputParams
+} from './remote-browser-page-input-params'
 import {
   getRemoteBrowserMouseButton,
   mapRemoteBrowserClientPoint,
@@ -44,9 +47,7 @@ export function useRemoteBrowserPageInput(input: RemoteBrowserPageInputParams): 
   handleRemotePointerDown: (event: React.PointerEvent<HTMLImageElement>) => void
   handleRemotePointerUp: (event: React.PointerEvent<HTMLImageElement>) => void
   handleRemotePointerMove: (event: React.PointerEvent<HTMLImageElement>) => void
-  handleRemoteScreenshotKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void
-  handleRemoteScreenshotPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void
-  handleRemoteKeyboardProxyText: (event: React.SyntheticEvent<HTMLTextAreaElement>) => void
+  keyboardProxyHandlers: RemoteBrowserKeyboardProxyHandlers
   runRemoteEditCommand: (command: BrowserPageEditCommand) => void
   selectPopupElement: React.JSX.Element | null
 } {
@@ -274,9 +275,11 @@ export function useRemoteBrowserPageInput(input: RemoteBrowserPageInputParams): 
     handleRemotePointerDown,
     handleRemotePointerUp,
     handleRemotePointerMove,
-    handleRemoteScreenshotKeyDown,
-    handleRemoteScreenshotPaste,
-    handleRemoteKeyboardProxyText,
+    keyboardProxyHandlers: {
+      onKeyDown: handleRemoteScreenshotKeyDown,
+      onPaste: handleRemoteScreenshotPaste,
+      onText: handleRemoteKeyboardProxyText
+    },
     runRemoteEditCommand,
     selectPopupElement
   }
