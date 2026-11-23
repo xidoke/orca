@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRuntimeEnvironmentCapability } from '@/runtime/rpc/compatibility/use-runtime-environment-capability'
 import { BROWSER_CERTIFICATE_TRUST_RUNTIME_CAPABILITY } from '../../../../../shared/browser/runtime/browser-runtime-capabilities'
 import { Globe, Loader2 } from 'lucide-react'
+import { isImeOwnedKeyboardEvent } from '@/lib/text-input/ime/ime-composition-keyboard-event'
 import {
   ComposingKeyboardProxy,
   recordComposingKeyboardProxyAnchor
@@ -209,7 +210,10 @@ export function RemoteBrowserPageViewport({
             data-browser-keyboard-proxy=""
             aria-label={t('auto.components.browser.pane.BrowserPane.572046436a', 'Remote browser')}
             onKeyDown={(event) => {
-              find.closeFindOnPageEscape(event)
+              // An Escape that cancels a composition belongs to the input method.
+              if (!isImeOwnedKeyboardEvent(event)) {
+                find.closeFindOnPageEscape(event)
+              }
               handleRemoteScreenshotKeyDown(event)
             }}
             onPaste={handleRemoteScreenshotPaste}
