@@ -44,7 +44,6 @@ import {
 import type { BrowserPageEditCommand } from '../assemble-chrome/context-menu/browser-page-context-menu-items'
 
 type CopyWrite = { text: string }
-type ProxyTextEvent = React.SyntheticEvent<HTMLTextAreaElement>
 
 type RemoteKeyboardInput =
   | { method: 'browser.keypress'; key: string }
@@ -93,7 +92,7 @@ export function useRemoteBrowserPageKeyboard({
 }): {
   handleRemoteScreenshotKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void
   handleRemoteScreenshotPaste: (event: React.ClipboardEvent<HTMLTextAreaElement>) => void
-  handleRemoteKeyboardProxyText: (event: ProxyTextEvent) => void
+  handleRemoteKeyboardProxyText: React.ReactEventHandler<HTMLTextAreaElement>
   runRemoteEditCommand: (command: BrowserPageEditCommand) => void
 } {
   const t = useTranslate()
@@ -287,7 +286,7 @@ export function useRemoteBrowserPageKeyboard({
     }
   }
 
-  const handleRemoteKeyboardProxyText = (event: ProxyTextEvent): void => {
+  const handleRemoteKeyboardProxyText: React.ReactEventHandler<HTMLTextAreaElement> = (event) => {
     const text = takeRemoteBrowserProxyText(event)
     if (text) {
       enqueueRemoteKeyboardInput({ method: 'typedText', text })
