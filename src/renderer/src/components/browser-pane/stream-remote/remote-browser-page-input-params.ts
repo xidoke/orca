@@ -18,6 +18,7 @@ export type RemoteBrowserPageInputParams = {
   pagePointerOwned: boolean
   inputQueue: RemoteBrowserInputQueue
   imageRef: React.RefObject<HTMLImageElement | null>
+  keyboardProxyRef: React.RefObject<HTMLTextAreaElement | null>
   remoteViewportRef: React.RefObject<HTMLDivElement | null>
   remoteCssViewportSizeRef: React.MutableRefObject<RemoteBrowserViewportSize | null>
   remoteViewportSizeRef: React.MutableRefObject<RemoteBrowserViewportSize | null>
