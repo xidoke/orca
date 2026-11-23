@@ -947,6 +947,7 @@ import { TerminalDaemonRestartSeveredParams } from './terminal/terminal-daemon-p
 import { TerminalLimitUpdateParams } from './terminal/terminal-limit-params'
 import { TerminalAdoptOrphans } from './terminal/terminal-orphan-params'
 import { TerminalQuickCommandsUpdate } from './terminal/terminal-quick-command-params'
+import { TerminalSplit } from './terminal/terminal-split-params'
 import {
   TerminalAckOutput,
   TerminalMultiplex,
@@ -974,7 +975,6 @@ import {
   TerminalSend,
   TerminalSetPaneTitle,
   TerminalSetViewerColors,
-  TerminalSplit,
   TerminalStopExact,
   TerminalViewClaudeAgent,
   TerminalWait
